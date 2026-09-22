@@ -237,7 +237,7 @@ impl Write for LogcatWriter<'_> {
 
             // UnixDatagram does not have a send_vectored().
             let n = rustix::io::writev(socket.deref_mut(), &iovecs)?;
-            if n != iovecs.iter().map(|v| v.len()).sum() {
+            if n != iovecs.iter().map(|v| v.len()).sum::<usize>() {
                 return Err(io::Error::new(
                     io::ErrorKind::UnexpectedEof,
                     "logcat datagram was truncated",
